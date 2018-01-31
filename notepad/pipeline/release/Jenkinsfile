@@ -1,4 +1,4 @@
-podTemplate(label: 'release', 
+podTemplate(label: 'release',
   containers: [
     containerTemplate(name: 'kubectl', image: 'jorgeacetozi/kubectl:1.7.0', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'maven', image: 'jorgeacetozi/maven:3.5.0-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -22,7 +22,7 @@ podTemplate(label: 'release',
     }
 
     stage('Destroy the previously created Testing environment') {
-      container("kubectl") { 
+      container("kubectl") {
         sh 'kubectl delete all -l env=testing'
       }
     }
@@ -34,7 +34,7 @@ podTemplate(label: 'release',
           cp /home/jenkins/.ssh/id_rsa /root/.ssh/id_rsa
           chmod 400 /root/.ssh/id_rsa
           ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
-          git clone git@github.com:jorgeacetozi/notepad.git
+          git clone git@github.com:adidhab/notepad.git
           cd notepad
           git config --global user.email "jenkins@jorgeacetozi.com"
           git config --global user.name "Jenkins"

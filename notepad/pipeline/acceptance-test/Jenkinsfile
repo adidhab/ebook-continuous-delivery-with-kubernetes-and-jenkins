@@ -1,4 +1,4 @@
-podTemplate(label: 'acceptance', 
+podTemplate(label: 'acceptance',
   containers: [
     containerTemplate(name: 'maven-firefox', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'maven-chrome', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -23,7 +23,7 @@ podTemplate(label: 'acceptance',
   node ('acceptance') {
 
     stage('Checkout the Notepad application') {
-      git url: 'https://github.com/jorgeacetozi/notepad.git', branch: "${GIT_BRANCH}"
+      git url: 'https://github.com/adidhab/notepad.git', branch: "${GIT_BRANCH}"
     }
 
     parallel (

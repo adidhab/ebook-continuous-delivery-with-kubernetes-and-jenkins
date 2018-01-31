@@ -1,4 +1,4 @@
-podTemplate(label: 'canary', 
+podTemplate(label: 'canary',
   containers: [
     containerTemplate(name: 'maven-firefox', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'maven-chrome', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -15,7 +15,7 @@ podTemplate(label: 'canary',
       envVar(key: 'DISPLAY', value: ':98.0'),
       envVar(key: 'SE_OPTS', value: '-port 5557'),
     ]),
-    containerTemplate(name: 'kubectl', image: 'jorgeacetozi/kubectl:1.7.0', ttyEnabled: true, command: 'cat')
+    containerTemplate(name: 'kubectl', image: 'jorgeaceto/kubectl:1.7.0', ttyEnabled: true, command: 'cat')
   ],
   envVars: [
     secretEnvVar(key: 'DOCKERHUB_USERNAME', secretName: 'dockerhub-username-secret', secretKey: 'USERNAME')
@@ -45,7 +45,7 @@ podTemplate(label: 'canary',
 
     dir('app') {
       stage('Checkout the Notepad application') {
-        git url: 'https://github.com/jorgeacetozi/notepad.git', branch: 'master'
+        git url: 'https://github.com/adidhab/notepad.git', branch: 'master'
       }
 
       parallel (

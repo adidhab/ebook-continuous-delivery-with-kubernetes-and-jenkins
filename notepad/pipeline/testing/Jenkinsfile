@@ -1,6 +1,6 @@
-podTemplate(label: 'testing', 
+podTemplate(label: 'testing',
   containers: [
-    containerTemplate(name: 'kubectl', image: 'jorgeacetozi/kubectl:1.7.0', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'kubectl', image: 'jorgeacet/kubectl:1.7.0', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'mysql', image: 'mysql:5.7', envVars: [
       envVar(key: 'MYSQL_DATABASE', value: 'notepad'),
       envVar(key: 'MYSQL_ROOT_PASSWORD', value: 'root')
@@ -24,7 +24,7 @@ podTemplate(label: 'testing',
 
     dir('app') {
       stage('Checkout the Notepad application') {
-        git url: 'https://github.com/jorgeacetozi/notepad.git', branch: "${GIT_BRANCH}"
+        git url: 'https://github.com/adidhab/notepad.git', branch: "${GIT_BRANCH}"
       }
 
       stage('Run Unit/Integration Tests, generate the jar artifact and push it to Artifactory') {
