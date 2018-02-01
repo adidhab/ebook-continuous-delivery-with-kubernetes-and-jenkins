@@ -24,7 +24,9 @@ podTemplate(label: 'testing',
 
                 dir('app') {
                     stage('Checkout the Notepad application') {
-                            git url: 'https://github.com/adidhab/notepad.git', branch: "${GIT_BRANCH}"
+                        container('maven') {
+                            git url: 'git@github.com:adidhab/notepad.git', branch: "${GIT_BRANCH}"
+                        }
                     }
 
                     stage('Run Unit/Integration Tests, generate the jar artifact and push it to Artifactory') {
@@ -41,6 +43,26 @@ podTemplate(label: 'testing',
             docker push ${DOCKERHUB_USERNAME}/${image_name}:${GIT_BRANCH}
           """
                         }
+                    }
+                }
+
+                stage('Destroy the Testing environment if it exists') {
+                    container('kubectl') {
+                        sh 'kubectl delete all -l env=testing'
+                    }
+                }
+
+                stage('Start a new Testing environment') {
+                    container('kubectl') {
+                        sh """
+          sed -i "s/NOTEPAD_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" ./notepad/k8s/testing/notepad-testing-deployment.yaml
+          kubectl apply -f notepad/k8s/testing/ -l app=mysql
+          sleep 20
+          kubectl apply -f notepad/k8s/testing/ -l app=notepad
+          kubectl rollout status deployment notepad-deployment-testing
+          kubectl get service notepad-service-testing
+          kubectl get endpoints notepad-service-testing
+        """
                     }
                 }
             }
