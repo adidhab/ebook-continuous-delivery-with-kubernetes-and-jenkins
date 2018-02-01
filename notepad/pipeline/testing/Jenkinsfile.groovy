@@ -65,5 +65,11 @@ podTemplate(label: 'testing',
         """
                     }
                 }
+                stage('Run Acceptance Tests') {
+                    build job: 'notepad-acceptance-test', parameters: [
+                            [$class: 'StringParameterValue', name: 'GIT_BRANCH', value: "${GIT_BRANCH}"],
+                            [$class: 'StringParameterValue', name: 'NOTEPAD_URL', value: 'http://notepad-service-testing:8080']
+                    ]
+                }
             }
         }
