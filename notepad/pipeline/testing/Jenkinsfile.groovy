@@ -25,7 +25,7 @@ podTemplate(label: 'testing',
                 dir('app') {
                     stage('Checkout the Notepad application') {
                         container('maven') {
-                            git url: 'git@github.com:adidhab/notepad.git', branch: "${GIT_BRANCH}"
+                            git url: 'https://github.com/adidhab/notepad.git', branch: "${GIT_BRANCH}"
                         }
                     }
 
